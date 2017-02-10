@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-import App from 'containers/App';
+import App from './containers/App';
 
 import 'index.html';
 
-ReactDOM.render(
+ReactDOM.render((
   <App />
-  document.getElementById('root')
+  ), document.getElementById('root')
 );
