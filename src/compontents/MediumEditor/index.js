@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-// import MediumEditors from 'medium-editor'
+import ReactDOM from 'react-dom';
+import blacklist from 'blacklist';
 
 import './style.css'
 
@@ -15,26 +16,70 @@ import '../../lib/style/default.css';
 class MediumEditor extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    this.state = {
+      text: this.props.text
+    };
   }
+
+  static defaultProps = {
+    tag: 'div',
+    text: '',
+    onChange: () => {},
+    options: {},
+  };
   
   componentDidMount() {
-    let editor = new MediumEditors('.editor-container', {})
-    // editor.subscribe('editableInput', (e) => {
-    //   this._updated = true;
-    //   this.change(dom.innerHTML);
-    // });
+    const dom = ReactDOM.findDOMNode(this);
+
+    this.medium = new MediumEditors(dom, this.props .options);
+    this.medium.subscribe('editableInput', (e) => {
+      this._updated = true;
+      this.change(dom.innerHTML);
+    });
+  }
+
+  componentDidUpdate() {
+    this.medium.restoreSelection();
+  }
+
+  componentWillUnmount() {
+    this.medium.destroy();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.text !== this.state.text && !this._updated) {
+      this.setState({ 
+        text: nextProps.text 
+      });
+    }
+
+    if (this._updated) this._updated = false;
+  }
+
+  change(text) {
+    this.props.onChange(text);
   }
 
   render() {
-    return (
-      <div className="editor-container">
-        <p>If you’ve been a part of the web community for the past few years, you already know the preferred method of solving a problem: build this with JavaScript. And so webpack attempts to make the build process
-         easier by passing dependencies through JavaScript. But the true power of its design isn’t simply the code management part; it’s that this management layer is 100% valid JavaScript (with Node features). webp
-         ack gives you the ability to write valid JavaScript that has a better sense of the system at large.</p>
-      </div>
-    );
+    const tag = this.props.tag;
+    const childProps = {
+      dangerouslySetInnerHTML: { __html: this.state.text }
+    }
+    if (this.medium) {
+      this.medium.saveSelection();
+    }
+
+    return React.createElement(tag, childProps);
   }
+};
+
+MediumEditors.propTypes = {
+  tag: PropTypes.string,
+  text: PropTypes.string,
+  options: PropTypes.any,
+  onChange: PropTypes.func,
+  flushEditorDOM: PropTypes.bool,
 };
 
 export default MediumEditor;
