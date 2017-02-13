@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import blacklist from 'blacklist';
 
-import './style.css'
-
 let MediumEditors
 
 if (typeof document !== 'undefined') {
