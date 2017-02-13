@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import MediumEditor from '../../compontents/MediumEditor'
+import MediumEditor from '../../compontents/ReactMediumEditor'
 import './style.scss';
 
 class App extends Component {
