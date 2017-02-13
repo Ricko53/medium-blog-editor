@@ -45,6 +45,14 @@ class MediumEditor extends Component {
     this.medium.destroy();
   }
 
+  shouldComponentUpdate(nextprops, nextstate) {
+    // if(nextprops.text === this.state.text) {
+    //   return false
+    // }
+    // return true
+    return false
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.text !== this.state.text && !this._updated) {
       this.setState({ 
@@ -56,7 +64,7 @@ class MediumEditor extends Component {
   }
 
   change(text) {
-    this.props.onChange(text);
+    this.props.onChange(text, this.props.paragraphName);
   }
 
   render() {
@@ -77,6 +85,7 @@ MediumEditors.propTypes = {
   text: PropTypes.string,
   options: PropTypes.any,
   onChange: PropTypes.func,
+  paragraphName: PropTypes.string,
   flushEditorDOM: PropTypes.bool,
 };
 
