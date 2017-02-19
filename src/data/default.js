@@ -8,3 +8,10 @@ export const defaultBlogData = [
     type: 'text',
   }
 ]
+
+export const defaultSectionData = function() {
+  return {
+    text: 'Hello I am a new section',
+    type: 'text',
+  }
+}

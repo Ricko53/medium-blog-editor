@@ -14,7 +14,6 @@ class MediumEditorList extends Component {
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
-    console.log(nextprops.mediumBlog.length === this.props.mediumBlog.length)
     if(nextprops.mediumBlog.length === this.props.mediumBlog.length) return false
     return true
   }

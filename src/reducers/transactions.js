@@ -6,16 +6,22 @@ import {
   DELETE_SECTION,
 } from '../actions';
 
+function addTransaction(state, action) {
+  const newState = [...state, action.transaction];
+  console.log('newState', newState)
+  return newState;
+}
+
 function transactionsBlog(state = defaultBlogData, action) {
   switch(action.type){
     case ADD_SECTION:
-      return state;
+      return addTransaction(state, action);
     case DELETE_SECTION:
       return state;
     default:
       return state;
   }
-}
+};
 
 export default combineReducers({
   transactionsBlog

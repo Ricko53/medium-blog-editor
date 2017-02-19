@@ -4,9 +4,15 @@ import { connect } from 'react-redux';
 
 import MediumEditorList from '../../compontents/ReactMediumEditor'
 import * as AppActions from '../../actions';
+import { defaultSectionData } from '../../data/default'
 import './style.scss';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.addSection = this.addSection.bind(this);
+  }
 
   static propTypes = {
     bolgData: PropTypes.array,
@@ -14,7 +20,12 @@ class App extends Component {
   };
 
   componentWillMount() {
-    console.log(this.props.bolgData)
+    console.info(this.props.bolgData)
+    console.info(this.props.actions)
+  }
+
+  addSection() {
+    this.props.actions.createTransaction(defaultSectionData())
   }
 
   render() {
@@ -23,6 +34,9 @@ class App extends Component {
       <div className="viewport">
         <div className="content">
           <MediumEditorList actions={this.props.actions} mediumBlog={this.props.bolgData}></MediumEditorList>
+        </div>
+        <div className="operate">
+          <div className="operate-add-button" onClick={this.addSection}> + </div>
         </div>
       </div>
     );
