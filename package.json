@@ -49,6 +49,9 @@
     "medium-editor": "^5.22.2",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "react-medium-editor": "^1.8.1"
+    "react-medium-editor": "^1.8.1",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   }
 }

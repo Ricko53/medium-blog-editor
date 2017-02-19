@@ -41,6 +41,7 @@ class MediumEditor extends Component {
   }
 
   render() {
+    console.log('render main')
     return (
       <div className="editor-container">
         {
