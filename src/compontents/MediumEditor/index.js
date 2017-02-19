@@ -68,10 +68,13 @@ class MediumEditor extends Component {
   }
 
   render() {
+    console.debug('render MediumEditor')
+
     const tag = this.props.tag;
     const childProps = {
       dangerouslySetInnerHTML: { __html: this.state.text }
     }
+
     if (this.medium) {
       this.medium.saveSelection();
     }
