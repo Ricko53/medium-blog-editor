@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import blacklist from 'blacklist';
 
 let MediumEditors
 

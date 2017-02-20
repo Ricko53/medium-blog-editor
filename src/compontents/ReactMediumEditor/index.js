@@ -6,6 +6,10 @@ import './style.css'
 
 class MediumEditorList extends Component {
 
+  static propTypes = {
+    mediumBlog: PropTypes.array,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
