@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import MediumEditorList from '../../compontents/ReactMediumEditor';
 import AddButtonMenu from '../../compontents/AddButtonMenu';
 import * as AppActions from '../../actions';
+
 import './style.scss';
+import '../../assets/style/style.scss'
 
 class App extends Component {
   static propTypes = {

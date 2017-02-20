@@ -73,14 +73,6 @@ module.exports = function (env) {
             },
           },
         },
-        // {
-        //   test: /\.(css)$/,
-        //   exclude: /node_modules/,
-        //   use: [
-        //     'style-loader',
-        //     'css-loader'
-        //   ]
-        // },
         {
           test: /\.(css|scss)$/,
           exclude: /node_modules/,
@@ -97,6 +89,21 @@ module.exports = function (env) {
             'babel-loader'
           ],
         },
+        {
+          test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
+          use: {
+            loader: 'file-loader',
+            query: {
+              name: './static/fonts/[name].[ext]'
+            }
+          }
+        },
+        {
+          test: /\.(jpe?g|svg|jpg)$/, 
+          use: {
+            loader: "file-loader" 
+          }
+        }
       ],
     },
     resolve: {

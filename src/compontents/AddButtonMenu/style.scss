@@ -2,15 +2,73 @@
   width: 100%;
   margin: auto;
   text-align: center;
+  // display: flex;
+  // justify-content: center;
 
-  .operate-add-button {
-    width: 30px;
-    height: 30px;
+  .operate-list {
     margin: auto;
-    line-height: 30px;
-    font-size: 24px;
+    display: flex; 
+    font-size: 20px;
+    justify-content: center;
+  }
+
+  .operate-nav {
+    display: flex;
+  }
+
+  .operate-button {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+    line-height: 40px;
     border: 1px solid #434343;
     border-radius: 50%;
     cursor: pointer;
+    will-change: transform;
+  }
+
+  .operate-add-button {
+    font-size: 40px;
+    line-height: 42px;
+    transition: transform .4s ease;
+    transform: rotate(0deg);
+  }
+}
+
+.hidden-nav {
+  .operate-nav {
+    visibility: hidden;
+    transition: visibility .5s;
+  }
+
+  .first-nav {
+    transition: transform .3s .1s ease;
+    transform: scale(0);
+  }
+
+  .second-nav {
+    transition: transform .3s ease;
+    transform: scale(0);
+  }
+}
+
+.show-nav {
+  .operate-add-button{
+    transform: rotate(135deg);
+  }
+
+  .operate-nav {
+    visibility: visible;
+    transition: visibility 0s;
+  }
+
+  .first-nav {
+    transition: transform .3s ease;
+    transform: scale(1);
+  }
+
+  .second-nav {
+    transition: transform .1s .2s ease;
+    transform: scale(1);
   }
 }
