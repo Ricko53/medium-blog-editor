@@ -15,3 +15,11 @@ export const defaultSectionData = function() {
     type: 'text',
   }
 }
+
+export const defaultImageData = function() {
+  return {
+    url: '',
+    fullScreen: true,
+    type: 'image',
+  }
+}
