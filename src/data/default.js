@@ -19,7 +19,7 @@ export const defaultSectionData = function() {
 export const defaultImageData = function(url) {
   return {
     url: url || '',
-    fullScreen: true,
+    fullScreen: false,
     type: 'image',
   }
 }

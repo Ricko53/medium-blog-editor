@@ -19,6 +19,12 @@ class App extends Component {
     super(props);
   }
 
+  getChildContext() {
+    return {
+      actions: this.props.actions
+    }
+  }
+
   componentWillMount() {
     console.info(this.props.bolgData)
     console.info(this.props.actions)
@@ -35,6 +41,10 @@ class App extends Component {
       </div>
     );
   }
+}
+
+App.childContextTypes = {
+  actions: PropTypes.object,
 }
 
 function mapStateToProps(state) {

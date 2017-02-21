@@ -19,7 +19,7 @@ class MediumEditorList extends Component {
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
-    if(nextprops.mediumBlog.length === this.props.mediumBlog.length) return false
+    // if(nextprops.mediumBlog.length === this.props.mediumBlog.length) return false
     return true
   }
 
@@ -38,7 +38,7 @@ class MediumEditorList extends Component {
           props.mediumBlog.map((item, index) => {
             if(item.type === 'text') {
               return (
-                <div key={index} className="editor-content">
+                <div key={index} className="editor-content media-with">
                   <Editor
                     paragraphName={index}
                     text={item.text}
@@ -50,7 +50,8 @@ class MediumEditorList extends Component {
               return (
                 <div key={index} className="image-content">
                   <ImageScale 
-                    url={item.url}   
+                    paragraphName={index}
+                    image={item}   
                   />
                 </div>
               );

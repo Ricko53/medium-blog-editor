@@ -1,5 +1,6 @@
 export const ADD_SECTION = 'ADD_SECTION'
 export const DELETE_SECTION = 'DELETE_SECTION'
+export const CHANGE_IMAGE_SCALE = 'CHANGE_IMAGE_SCALE'
 
 export function createTransaction(transaction) {
   return {
@@ -13,6 +14,14 @@ export function deleteTransaction(id) {
     type: DELETE_SECTION,
     id
   };
+}
+
+export function changeImageScale(id, val) {
+  return {
+    type: CHANGE_IMAGE_SCALE,
+    id,
+    val
+  }
 }
 
 // export function addTransaction(transaction) {
