@@ -11,14 +11,14 @@ export const defaultBlogData = [
 
 export const defaultSectionData = function() {
   return {
-    text: 'Hello I am a new section',
+    text: '',
     type: 'text',
   }
 }
 
-export const defaultImageData = function() {
+export const defaultImageData = function(url) {
   return {
-    url: '',
+    url: url || '',
     fullScreen: true,
     type: 'image',
   }

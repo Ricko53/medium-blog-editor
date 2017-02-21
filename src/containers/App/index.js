@@ -30,8 +30,8 @@ class App extends Component {
       <div className="viewport">
         <div className="content">
           <MediumEditorList actions={this.props.actions} mediumBlog={this.props.bolgData}></MediumEditorList>
+          <AddButtonMenu  actions={this.props.actions} />
         </div>
-        <AddButtonMenu  actions={this.props.actions} />
       </div>
     );
   }

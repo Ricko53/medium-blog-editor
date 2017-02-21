@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 // import Editor from 'react-medium-editor';
 import Editor from '../MediumEditor';
+import ImageScale from '../ImageScale'
 
 import './style.css'
 
@@ -32,18 +33,28 @@ class MediumEditorList extends Component {
     console.debug('render MediumEditorList')
 
     return (
-      <div className="editor-container">
+      <div className="editor-list-container">
         {
           props.mediumBlog.map((item, index) => {
-            return (
-              <div key={index} className="editor-content">
-                <Editor
-                  paragraphName={index}
-                  text={item.text}
-                  onChange={this.handleChange}
-                />
-              </div>
-            )
+            if(item.type === 'text') {
+              return (
+                <div key={index} className="editor-content">
+                  <Editor
+                    paragraphName={index}
+                    text={item.text}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              )
+            } else if (item.type === 'image') {
+              return (
+                <div key={index} className="image-content">
+                  <ImageScale 
+                    url={item.url}   
+                  />
+                </div>
+              );
+            }
           })
         }
       </div>
