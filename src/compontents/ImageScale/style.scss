@@ -1,20 +1,23 @@
+@import "../../assets/style/variables";
+
 .scale-box {
   position: relative;
   margin: auto;
   display: flex;
-  transition: height .5s ease;
-  width: 100%;
+  transition: height .3s ease, width .3s ease;
+  width: $content-width;
   will-change: height;
 
   .sacle-image {
     margin: auto;
-    width: 60vw;
-    padding: 0;
-    transition: width .5s ease;
-    will-change: width;
+    width: 100%;
+    // padding: 0;
+    // transform: scale(1, 1);
+    // transition: transform .5s .3s ease;
+    // will-change: transform;
   }
 
-  .full-image {
-    width: 100vw;
-  }
+  // .full-image {
+  //   width: 100vw;
+  // }
 }

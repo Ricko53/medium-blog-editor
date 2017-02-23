@@ -27,6 +27,7 @@ class AddButtonMenu extends Component {
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
+    if(nextstate.stateClass === this.state.stateClass) return false
     return true
   }
 
