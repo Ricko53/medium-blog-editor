@@ -9,13 +9,16 @@ class MediumEditorList extends Component {
 
   static propTypes = {
     mediumBlog: PropTypes.array,
+    actions: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
     this.state = {
     };
+
     this.handleChange = this.handleChange.bind(this);
+    this.getElementTop = this.getElementTop.bind(this);
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
@@ -27,13 +30,30 @@ class MediumEditorList extends Component {
     this.props.mediumBlog[paragraphName].text = text
   }
 
+  getElementTop() {
+    let childList = this.refs.container.childNodes
+    let elementPositionTopList = []
+
+    // 获取文本元素距离右边的距离
+    let elementPositionLeft = childList[1].offsetLeft
+    let elementPositionWidth = childList[1].offsetWidth
+    childList.forEach((ele)=>{
+      elementPositionTopList.push(ele.offsetTop)
+    })
+    this.context.actions.openDragDownPage(true, {
+      elementPositionLeft,
+      elementPositionWidth,
+      elementPositionTopList
+    })
+  }
+
   render() {
     let props = this.props
 
     console.debug('render MediumEditorList')
 
     return (
-      <div className="editor-list-container">
+      <div ref="container" className="editor-list-container" onClick={this.getElementTop}>
         {
           props.mediumBlog.map((item, index) => {
             if(item.type === 'text') {
@@ -61,6 +81,10 @@ class MediumEditorList extends Component {
       </div>
     );
   }
+}
+
+MediumEditorList.contextTypes = {
+  actions: PropTypes.object
 }
 
 export default MediumEditorList;

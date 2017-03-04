@@ -1,6 +1,7 @@
 export const ADD_SECTION = 'ADD_SECTION'
 export const DELETE_SECTION = 'DELETE_SECTION'
 export const CHANGE_IMAGE_SCALE = 'CHANGE_IMAGE_SCALE'
+export const OPEN_DRAG_DOWN_PAGE = 'OPEN_DRAG_DOWN_PAGE'
 
 export function createTransaction(transaction) {
   return {
@@ -21,6 +22,14 @@ export function changeImageScale(id, val) {
     type: CHANGE_IMAGE_SCALE,
     id,
     val
+  }
+}
+
+export function openDragDownPage(open, position) {
+  return {
+    type: OPEN_DRAG_DOWN_PAGE,
+    open,
+    position
   }
 }
 

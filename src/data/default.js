@@ -9,6 +9,10 @@ export const defaultBlogData = [
   }
 ]
 
+export const defaultPosition = {
+  open: false,
+}
+
 export const defaultSectionData = function() {
   return {
     text: '',

@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import MediumEditorList from '../../compontents/ReactMediumEditor';
+import MediumEditorList from '../../compontents/MediumEditorList';
 import AddButtonMenu from '../../compontents/AddButtonMenu';
+import DragDownPage from '../../compontents/DragDownPage'
 import * as AppActions from '../../actions';
 
 import './style.scss';
@@ -26,7 +27,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.info(this.props.bolgData)
+    console.info(this.props.dragDownData)
     console.info(this.props.actions)
   }
 
@@ -35,8 +36,9 @@ class App extends Component {
     return (
       <div className="viewport">
         <div className="content">
-          <MediumEditorList actions={this.props.actions} mediumBlog={this.props.bolgData}></MediumEditorList>
+          <MediumEditorList actions={this.props.actions} mediumBlog={this.props.bolgData} />
           <AddButtonMenu  actions={this.props.actions} />
+          <DragDownPage dragDownData={this.props.dragDownData} mediumBlog={this.props.bolgData} />
         </div>
       </div>
     );
@@ -50,7 +52,8 @@ App.childContextTypes = {
 function mapStateToProps(state) {
   const { transactions } = state;
   return {
-    bolgData: transactions.transactionsBlog
+    bolgData: transactions.transactionsBlog,
+    dragDownData: transactions.dragDownPosition
   };
 }
 
