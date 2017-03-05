@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import Editor from '../MediumEditor';
-import ImageScale from '../ImageScale'
+import FakeMediumText from '../FakeMediumText';
+import FakeImageScale from '../FakeImageScale'
 
 import './style.css'
 
@@ -18,7 +18,7 @@ class DragDownPage extends Component {
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
-    if(nextprops.dragDownData.open !== this.state.dragDownData.open || nextprops.dragDownData.open){
+    if(nextprops.dragDownData.open !== this.props.dragDownData.open || nextprops.dragDownData.open){
       return true
     }
     return false
@@ -41,18 +41,15 @@ class DragDownPage extends Component {
             if(item.type === 'text') {
               return (
                 <div key={index} className="editor-content media-with">
-                  <Editor
-                    paragraphName={index}
+                  <FakeMediumText
                     text={item.text}
-                    onChange={this.handleChange}
                   />
                 </div>
               )
             } else if (item.type === 'image') {
               return (
                 <div key={index} className="image-content">
-                  <ImageScale 
-                    paragraphName={index}
+                  <FakeImageScale 
                     image={item}   
                   />
                 </div>
