@@ -34,14 +34,11 @@ class DragDownPage extends Component {
       opacity: props.dragDownData.open ? 1 : 0,
     }
 
-    console.log(props.dragDownData.position)
-
-    return (
-      <div className="drag-down-list-container" style={pageStyle}>
-        {
+    let content = props.dragDownData.open ? (
           props.mediumBlog.map((item, index) => {
+
             let positionStyle = {
-              transform: props.dragDownData.position.elementPositionTopList ? `translate(${props.dragDownData.position.elementPositionLeft}px, ${props.dragDownData.position.elementPositionTopList[index]}px)` : `translate(0)`
+              transform: `translate(${props.dragDownData.position.elementPositionLeft}px, ${props.dragDownData.position.elementPositionTopList[index]}px)`
             }
 
             if(item.type === 'text') {
@@ -53,21 +50,25 @@ class DragDownPage extends Component {
                 </div>
               )
             } else if (item.type === 'image') {
-
               if(item.fullScreen) {
-                positionStyle.transform = props.dragDownData.position.elementPositionTopList ? `translate( 0, ${props.dragDownData.position.elementPositionTopList[index]}px )` : `translate(0)`
+                positionStyle.transform = `translate( 0, ${props.dragDownData.position.elementPositionTopList[index]}px )`
               }
 
               return (
                 <div key={index} className="drag-image-content image-content" style={positionStyle}>
                   <FakeImageScale 
-                    image={item}   
+                    image={item}
+                    fullScreen={item.fullScreen}   
                   />
                 </div>
               );
             }
           })
-        }
+        ) : null
+
+    return (
+      <div className="drag-down-list-container" style={pageStyle}>
+        {content}
       </div>
     );
   }
