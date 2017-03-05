@@ -19,6 +19,7 @@ class MediumEditorList extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.getElementTop = this.getElementTop.bind(this);
+    this.closeDrapDownPage = this.closeDrapDownPage.bind(this);
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
@@ -47,13 +48,17 @@ class MediumEditorList extends Component {
     })
   }
 
+  closeDrapDownPage() {
+    this.context.actions.openDragDownPage(false, {})
+  }
+
   render() {
     let props = this.props
 
     console.debug('render MediumEditorList')
 
     return (
-      <div ref="container" className="editor-list-container" onClick={this.getElementTop}>
+      <div ref="container" className="editor-list-container">
         {
           props.mediumBlog.map((item, index) => {
             if(item.type === 'text') {
@@ -78,6 +83,14 @@ class MediumEditorList extends Component {
             }
           })
         }
+        <div className="editor-control">
+          <div className="editor-control-drap" onClick={this.getElementTop}>
+            <i className="icon-move-up"></i>
+          </div>
+          <div className="editor-control-drap" onClick={this.closeDrapDownPage}>
+            <i className="icon-cross"></i>
+          </div>
+        </div>
       </div>
     );
   }

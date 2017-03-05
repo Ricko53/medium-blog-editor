@@ -71,4 +71,13 @@
     content: $icon-circle-left;
   }
 }
-
+.icon-move-up {
+  &:before {
+    content: $icon-move-up;
+  }
+}
+.icon-move-down {
+  &:before {
+    content: $icon-move-down;
+  }
+}

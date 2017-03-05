@@ -18,7 +18,10 @@ class DragDownPage extends Component {
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
-    return true
+    if(nextprops.dragDownData.open !== this.state.dragDownData.open || nextprops.dragDownData.open){
+      return true
+    }
+    return false
   }
 
   render() {
