@@ -11,6 +11,10 @@ class FakeMediumText extends Component {
     }
   }
 
+  shouldComponentUpdate(nextprops, nextstate) {
+    return false
+  }
+
   componentDidMount() {
   }
 

@@ -31,6 +31,11 @@ class FakeImageScale extends Component {
     })
   }
 
+  shouldComponentUpdate(nextprops, nextstate) {
+    if(nextstate.ratio !== this.state.ratio) return true
+    return false
+  }
+
   render() {
     console.debug('FakeImageScale render')
 
