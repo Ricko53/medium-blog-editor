@@ -37,13 +37,18 @@ class MediumEditorList extends Component {
 
     // 获取文本元素距离右边的距离
     let elementPositionLeft = childList[1].offsetLeft
-    let elementPositionWidth = childList[1].offsetWidth
+    // let elementPositionWidth = childList[1].offsetWidth
     childList.forEach((ele)=>{
-      elementPositionTopList.push(ele.offsetTop)
+      let eleOffset = {
+        offsetTop : ele.offsetTop,
+        // offsetLeft: ele.offsetLeft,
+        offsetHeight: ele.offsetHeight,
+      }
+      elementPositionTopList.push(eleOffset)
     })
     this.context.actions.openDragDownPage(true, {
       elementPositionLeft,
-      elementPositionWidth,
+      // elementPositionWidth,
       elementPositionTopList
     })
   }

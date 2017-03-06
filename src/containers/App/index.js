@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.info(this.props.dragDownData)
     console.info(this.props.actions)
   }
 
