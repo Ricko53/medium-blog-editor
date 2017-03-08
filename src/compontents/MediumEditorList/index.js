@@ -38,8 +38,9 @@ class MediumEditorList extends Component {
     // 获取文本元素距离右边的距离
     let elementPositionLeft = childList[1].offsetLeft
     // let elementPositionWidth = childList[1].offsetWidth
-    childList.forEach((ele)=>{
+    childList.forEach((ele, i)=>{
       let eleOffset = {
+        id: i,
         offsetTop : ele.offsetTop,
         // offsetLeft: ele.offsetLeft,
         offsetHeight: ele.offsetHeight,
@@ -63,31 +64,33 @@ class MediumEditorList extends Component {
     console.debug('render MediumEditorList')
 
     return (
-      <div ref="container" className="editor-list-container">
-        {
-          props.mediumBlog.map((item, index) => {
-            if(item.type === 'text') {
-              return (
-                <div key={index} className="editor-content media-with">
-                  <Editor
-                    paragraphName={index}
-                    text={item.text}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              )
-            } else if (item.type === 'image') {
-              return (
-                <div key={index} className="image-content">
-                  <ImageScale 
-                    paragraphName={index}
-                    image={item}   
-                  />
-                </div>
-              );
-            }
-          })
-        }
+      <div>
+        <div ref="container" className="editor-list-container">
+          {
+            props.mediumBlog.map((item, index) => {
+              if(item.type === 'text') {
+                return (
+                  <div key={index} className="editor-content media-with">
+                    <Editor
+                      paragraphName={index}
+                      text={item.text}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                )
+              } else if (item.type === 'image') {
+                return (
+                  <div key={index} className="image-content">
+                    <ImageScale 
+                      paragraphName={index}
+                      image={item}   
+                    />
+                  </div>
+                );
+              }
+            })
+          }
+        </div>
         <div className="editor-control">
           <div className="editor-control-drap" onClick={this.getElementTop}>
             <i className="icon-move-up"></i>

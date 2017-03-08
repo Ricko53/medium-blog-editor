@@ -2,6 +2,7 @@ export const ADD_SECTION = 'ADD_SECTION'
 export const DELETE_SECTION = 'DELETE_SECTION'
 export const CHANGE_IMAGE_SCALE = 'CHANGE_IMAGE_SCALE'
 export const OPEN_DRAG_DOWN_PAGE = 'OPEN_DRAG_DOWN_PAGE'
+export const CHANGE_BLOG_SORT = 'CHANGE_BLOG_SORT'
 
 export function createTransaction(transaction) {
   return {
@@ -22,6 +23,13 @@ export function changeImageScale(id, val) {
     type: CHANGE_IMAGE_SCALE,
     id,
     val
+  }
+}
+
+export function changeBlogSort(id, move) {
+  return {
+    type: CHANGE_BLOG_SORT,
+    move
   }
 }
 

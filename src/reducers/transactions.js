@@ -15,7 +15,7 @@ function addTransaction(state, action) {
 }
 
 function changeImageScale(state, action) {
-  let newState = [].concat(state)
+  let newState = state.slice(0)              //[].concat(state)
   newState[action.id].fullScreen = action.val
   return newState
 }
