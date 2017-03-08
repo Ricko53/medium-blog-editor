@@ -33,7 +33,6 @@ class FakeImageScale extends Component {
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
-    if(nextstate.ratio !== this.state.ratio || nextprops.fullScreen !== this.props.fullScreen) return true
     return false
   }
 

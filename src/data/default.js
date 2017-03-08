@@ -18,7 +18,8 @@ export const defaultBlogData = [
 
 export const defaultPosition = {
   open: false,
-  position: {}
+  position: {},
+  update: false,
 }
 
 export const defaultSectionData = function() {

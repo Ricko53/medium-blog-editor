@@ -26,11 +26,10 @@ export function changeImageScale(id, val) {
   }
 }
 
-export function changeBlogSort(form, to) {
+export function changeBlogSort(arr) {
   return {
     type: CHANGE_BLOG_SORT,
-    form,
-    to
+    sequence: arr
   }
 }
 

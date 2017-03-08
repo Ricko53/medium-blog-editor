@@ -26,10 +26,6 @@ function reinsertUp(arr, from, to) {
   return _arr;
 }
 
-function clamp(n, min, max) {
-  return Math.max(Math.min(n, max), min);
-}
-
 const springConfig = {stiffness: 300, damping: 30};
 let positionList = []
 
@@ -56,27 +52,29 @@ class DragDownPage extends Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleTouchStart = this.handleTouchStart.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
+
+    this.updateBlogSort = this.updateBlogSort.bind(this)
   }
 
   componentDidMount() {
-    this.addTouchEventListener()
   }
 
   componentWillReceiveProps(nextprops, context) {
-    if(nextprops.dragDownData.open !== this.props.dragDownData.open && nextprops.dragDownData){
+    if(nextprops.dragDownData.open !== this.props.dragDownData.open && nextprops.dragDownData.open){
+      this.addTouchEventListener()
       positionList = [].concat(nextprops.dragDownData.position.elementPositionTopList)
+    }
+    if(!nextprops.dragDownData.open){
+      this.removeTouchEventListener()
     }
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
+    // if(!nextprops.dragDownData.update) return false
     if(nextprops.dragDownData.open !== this.props.dragDownData.open || nextprops.dragDownData.open){
       return true
     }
     return false
-  }
-
-  componentWillUnmount() {
-    this.removeTouchEventListener()
   }
 
   addTouchEventListener() {
@@ -114,7 +112,6 @@ class DragDownPage extends Component {
 
   handleMouseMove({pageY}) {
     const {isPressed, topDeltaY, originalPosOfLastPressed} = this.state
-
     if (isPressed) {
       const mouseY = pageY - topDeltaY
       let realId = 0
@@ -131,14 +128,12 @@ class DragDownPage extends Component {
         if(realId > 0){
           moveBackEle = positionList[realId - 1]
           if(moveBackEle.offsetHeight < curDeltaY) {
-            // this.context.actions.changeBlogSort(originalPosOfLastPressed, originalPosOfLastPressed - 1)
             positionList = reinsertDown(positionList, realId, realId - 1)
           }
         }
       } else {
         if(moveBackEle) {
           if(moveBackEle.offsetHeight < curDeltaY * -1) {
-            // this.context.actions.changeBlogSort(originalPosOfLastPressed, originalPosOfLastPressed + 1)
             positionList = reinsertUp(positionList, realId, realId + 1)
           }
         }
@@ -154,6 +149,10 @@ class DragDownPage extends Component {
     this.setState({isPressed: false, topDeltaY: 0})
   }
 
+  updateBlogSort() {
+    this.context.actions.changeBlogSort(positionList)
+  }
+
   render() {
     const {mouseY, isPressed, originalPosOfLastPressed} = this.state;
     const props = this.props
@@ -166,7 +165,7 @@ class DragDownPage extends Component {
     }
 
     let content = props.dragDownData.open ? (
-        props.mediumBlog.map((item, index) => {  
+        props.mediumBlog.map((item, index) => {
 
           let elePosition = {}
           let rId = index
@@ -237,6 +236,9 @@ class DragDownPage extends Component {
 
     return (
       <div className="drag-down-list-container" style={pageStyle}>
+        <div className="close-drag-page" onClick={this.updateBlogSort}>
+          <i className="icon-cross"></i>
+        </div>
         {content}
       </div>
     );

@@ -40,6 +40,7 @@ class MediumEditorList extends Component {
     // let elementPositionWidth = childList[1].offsetWidth
     childList.forEach((ele, i)=>{
       let eleOffset = {
+        // id: parseInt(ele.dataset.eleid),
         id: i,
         offsetTop : ele.offsetTop,
         // offsetLeft: ele.offsetLeft,
@@ -70,7 +71,7 @@ class MediumEditorList extends Component {
             props.mediumBlog.map((item, index) => {
               if(item.type === 'text') {
                 return (
-                  <div key={index} className="editor-content media-with">
+                  <div key={index} data-eleid={item.id} className="editor-content media-with">
                     <Editor
                       paragraphName={index}
                       text={item.text}
@@ -80,7 +81,7 @@ class MediumEditorList extends Component {
                 )
               } else if (item.type === 'image') {
                 return (
-                  <div key={index} className="image-content">
+                  <div key={index} data-eleid={item.id} className="image-content">
                     <ImageScale 
                       paragraphName={index}
                       image={item}   

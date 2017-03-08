@@ -48,8 +48,8 @@ class MediumEditor extends Component {
     // if(nextprops.text === this.state.text) {
     //   return false
     // }
-    // return true
-    return false
+    return true
+    // return false
   }
 
   componentWillReceiveProps(nextProps) {
