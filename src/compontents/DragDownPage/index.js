@@ -6,11 +6,32 @@ import FakeImageScale from '../FakeImageScale'
 
 import './style.css'
 
+function reinsertDown(arr, from, to) {
+  let _arr = arr.slice(0);
+  let val = _arr[from];
+  val.offsetTop = _arr[to].offsetTop
+  _arr[to].offsetTop = _arr[to].offsetTop + val.offsetHeight +10
+  _arr.splice(from, 1);
+  _arr.splice(to, 0, val);
+  return _arr;
+}
+
+function reinsertUp(arr, from, to) {
+  let _arr = arr.slice(0);
+  let val = _arr[from];
+  _arr[to].offsetTop = val.offsetTop
+  val.offsetTop = val.offsetTop + _arr[to].offsetHeight + 10
+  _arr.splice(from, 1);
+  _arr.splice(to, 0, val);
+  return _arr;
+}
+
 function clamp(n, min, max) {
   return Math.max(Math.min(n, max), min);
 }
 
-const springConfig = {stiffness: 300, damping: 50};
+const springConfig = {stiffness: 300, damping: 30};
+let positionList = []
 
 class DragDownPage extends Component {
 
@@ -26,7 +47,7 @@ class DragDownPage extends Component {
       mouseY: 0,
       isPressed: false,
       originalPosOfLastPressed: 0,
-    };
+    }
 
     this.addTouchEventListener = this.addTouchEventListener.bind(this)
     this.removeTouchEventListener = this.removeTouchEventListener.bind(this)
@@ -41,11 +62,21 @@ class DragDownPage extends Component {
     this.addTouchEventListener()
   }
 
+  componentWillReceiveProps(nextprops, context) {
+    if(nextprops.dragDownData.open !== this.props.dragDownData.open && nextprops.dragDownData){
+      positionList = [].concat(nextprops.dragDownData.position.elementPositionTopList)
+    }
+  }
+
   shouldComponentUpdate(nextprops, nextstate) {
     if(nextprops.dragDownData.open !== this.props.dragDownData.open || nextprops.dragDownData.open){
       return true
     }
     return false
+  }
+
+  componentWillUnmount() {
+    this.removeTouchEventListener()
   }
 
   addTouchEventListener() {
@@ -86,7 +117,36 @@ class DragDownPage extends Component {
 
     if (isPressed) {
       const mouseY = pageY - topDeltaY
-      console.debug(mouseY)
+      let realId = 0
+      for(let i = 0; i < positionList.length; i++){
+        if(positionList[i].id === originalPosOfLastPressed) {
+          realId = i
+          break;
+        }
+      }
+      let curItemPosition = positionList[realId]
+      let curDeltaY =  curItemPosition.offsetTop - mouseY
+      let moveBackEle = positionList[realId + 1]
+      if(curDeltaY > 0) {
+        if(realId > 0){
+          moveBackEle = positionList[realId - 1]
+          if(moveBackEle.offsetHeight < curDeltaY) {
+            // this.context.actions.changeBlogSort(originalPosOfLastPressed, originalPosOfLastPressed - 1)
+            positionList = reinsertDown(positionList, realId, realId - 1)
+          }
+        }
+      } else {
+        if(moveBackEle) {
+          if(moveBackEle.offsetHeight < curDeltaY * -1) {
+            // this.context.actions.changeBlogSort(originalPosOfLastPressed, originalPosOfLastPressed + 1)
+            positionList = reinsertUp(positionList, realId, realId + 1)
+          }
+        }
+      }
+
+      this.setState({
+        mouseY: mouseY,
+      })
     }
   }
 
@@ -95,7 +155,8 @@ class DragDownPage extends Component {
   }
 
   render() {
-    let props = this.props
+    const {mouseY, isPressed, originalPosOfLastPressed} = this.state;
+    const props = this.props
 
     console.debug('render DragDownPage')
 
@@ -105,9 +166,17 @@ class DragDownPage extends Component {
     }
 
     let content = props.dragDownData.open ? (
-        props.mediumBlog.map((item, index) => {
+        props.mediumBlog.map((item, index) => {  
 
-          let elePosition = props.dragDownData.position.elementPositionTopList[index]
+          let elePosition = {}
+          let rId = index
+
+          for(let posl of positionList){
+            if(posl.id === rId){
+              elePosition = posl
+              break;
+            }
+          }
 
           let positionStyle = {
             transform: `translate(${props.dragDownData.position.elementPositionLeft}px, ${elePosition.offsetTop}px)`
@@ -115,7 +184,9 @@ class DragDownPage extends Component {
 
           let positionLeft = props.dragDownData.position.elementPositionLeft
 
-          let style = {
+          let style = originalPosOfLastPressed === rId && isPressed ? {
+            y: spring(mouseY, springConfig),
+          } : {
             y: spring(elePosition.offsetTop, springConfig),
           }
 
@@ -128,8 +199,8 @@ class DragDownPage extends Component {
                     style={{
                       transform: `translate3d(${positionLeft}px, ${y}px, 0)`
                     }}
-                    onMouseDown={this.handleMouseDown.bind(null, index, y)}
-                    onTouchStart={this.handleTouchStart.bind(null, index, y)}
+                    onMouseDown={this.handleMouseDown.bind(null, rId, y)}
+                    onTouchStart={this.handleTouchStart.bind(null, rId, y)}
                   >
                     <FakeMediumText
                       text={item.text}

@@ -1,16 +1,16 @@
 export const defaultBlogData = [
   {
-    id: 1,
+    id: 0,
     text: 'paragraph one',
     type: 'text',
   },
   {
-    id: 2,
+    id: 1,
     text: `I'm a apple`,
     type: 'text',
   },
   {
-    id: 3,
+    id: 2,
     text: 'none can tell me',
     type: 'text',
   }

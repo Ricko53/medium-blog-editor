@@ -6,6 +6,7 @@ import {
   DELETE_SECTION,
   CHANGE_IMAGE_SCALE,
   OPEN_DRAG_DOWN_PAGE,
+  CHANGE_BLOG_SORT
 } from '../actions';
 
 function addTransaction(state, action) {
@@ -20,6 +21,14 @@ function changeImageScale(state, action) {
   return newState
 }
 
+function reinsert(arr, from, to) {
+  const _arr = arr.slice(0);
+  const val = _arr[from];
+  _arr.splice(from, 1);
+  _arr.splice(to, 0, val);
+  return _arr;
+}
+
 function transactionsBlog(state = defaultBlogData, action) {
   switch(action.type){
     case ADD_SECTION:
@@ -28,6 +37,8 @@ function transactionsBlog(state = defaultBlogData, action) {
       return state;
     case CHANGE_IMAGE_SCALE:
       return changeImageScale(state, action);
+    case CHANGE_BLOG_SORT: 
+      return reinsert(state, action.form, action.to)
     default:
       return state;
   }
