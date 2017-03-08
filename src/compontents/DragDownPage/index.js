@@ -178,10 +178,6 @@ class DragDownPage extends Component {
             }
           }
 
-          let positionStyle = {
-            transform: `translate(${props.dragDownData.position.elementPositionLeft}px, ${elePosition.offsetTop}px)`
-          }
-
           let positionLeft = props.dragDownData.position.elementPositionLeft
 
           let style = originalPosOfLastPressed === rId && isPressed ? {
@@ -197,7 +193,8 @@ class DragDownPage extends Component {
                   <div 
                     className="drag-editor-content editor-content media-with" 
                     style={{
-                      transform: `translate3d(${positionLeft}px, ${y}px, 0)`
+                      transform: `translate3d(${positionLeft}px, ${y}px, 0)`,
+                      zIndex: rId === originalPosOfLastPressed ? 99 : 1,
                     }}
                     onMouseDown={this.handleMouseDown.bind(null, rId, y)}
                     onTouchStart={this.handleTouchStart.bind(null, rId, y)}
@@ -211,16 +208,28 @@ class DragDownPage extends Component {
             )
           } else if (item.type === 'image') {
             if(item.fullScreen) {
-              positionStyle.transform = `translate( 0, ${elePosition.offsetTop}px )`
+              positionLeft = 0
             }
 
             return (
-              <div key={index} className="drag-image-content image-content" style={positionStyle}>
-                <FakeImageScale 
-                  image={item}
-                  fullScreen={item.fullScreen}   
-                />
-              </div>
+              <Motion style={style} key={index}>
+              {({y}) => 
+                <div 
+                  className="drag-image-content image-content" 
+                  style={{
+                    transform: `translate3d(${positionLeft}px, ${y}px, 0)`,
+                    zIndex: rId === originalPosOfLastPressed ? 99 : 1,
+                  }}
+                  onMouseDown={this.handleMouseDown.bind(null, rId, y)}
+                  onTouchStart={this.handleTouchStart.bind(null, rId, y)}
+                >
+                    <FakeImageScale 
+                      image={item}
+                      fullScreen={item.fullScreen}   
+                    />
+                </div>
+              }
+              </Motion>
             );
           }
         })
