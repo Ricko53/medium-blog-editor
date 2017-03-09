@@ -63,6 +63,7 @@ class DragDownPage extends Component {
     if(nextprops.dragDownData.open !== this.props.dragDownData.open && nextprops.dragDownData.open){
       this.addTouchEventListener()
       positionList = [].concat(nextprops.dragDownData.position.elementPositionTopList)
+      console.log(positionList)
     }
     if(!nextprops.dragDownData.open){
       this.removeTouchEventListener()
@@ -155,17 +156,18 @@ class DragDownPage extends Component {
 
   render() {
     const {mouseY, isPressed, originalPosOfLastPressed} = this.state;
-    const props = this.props
+    const { dragDownData, mediumBlog } = this.props
 
-    console.debug('render DragDownPage')
+    console.debug('render DragDownPage', dragDownData)
 
     let pageStyle = {
-      visibility: props.dragDownData.open ? 'visible' : 'hidden',
-      opacity: props.dragDownData.open ? 1 : 0,
+      visibility: dragDownData.open ? 'visible' : 'hidden',
+      opacity: dragDownData.open ? 1 : 0,
+      height: dragDownData.position.contentHeight || '100%',
     }
 
-    let content = props.dragDownData.open ? (
-        props.mediumBlog.map((item, index) => {
+    let content = dragDownData.open ? (
+        mediumBlog.map((item, index) => {
 
           let elePosition = {}
           let rId = index
@@ -177,7 +179,7 @@ class DragDownPage extends Component {
             }
           }
 
-          let positionLeft = props.dragDownData.position.elementPositionLeft
+          let positionLeft = dragDownData.position.elementPositionLeft
 
           let style = originalPosOfLastPressed === rId && isPressed ? {
             y: spring(mouseY, springConfig),
