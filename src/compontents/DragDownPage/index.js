@@ -63,7 +63,6 @@ class DragDownPage extends Component {
     if(nextprops.dragDownData.open !== this.props.dragDownData.open && nextprops.dragDownData.open){
       this.addTouchEventListener()
       positionList = [].concat(nextprops.dragDownData.position.elementPositionTopList)
-      console.log(positionList)
     }
     if(!nextprops.dragDownData.open){
       this.removeTouchEventListener()
@@ -158,7 +157,7 @@ class DragDownPage extends Component {
     const {mouseY, isPressed, originalPosOfLastPressed} = this.state;
     const { dragDownData, mediumBlog } = this.props
 
-    console.debug('render DragDownPage', dragDownData)
+    console.debug('render DragDownPage')
 
     let pageStyle = {
       visibility: dragDownData.open ? 'visible' : 'hidden',

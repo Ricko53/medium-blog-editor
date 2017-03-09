@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import './style.scss'
 
 let winWidth = window.innerWidth
-let defaultHeight = 600
 
 class FakeImageScale extends Component {
   static propTypes = {
@@ -24,12 +23,6 @@ class FakeImageScale extends Component {
 
     // 0.6 按照 content 宽度 60% 计算
     // scaleVal = 10/6
-    let ratio = imgHeight/imgWidth
-    defaultHeight = winWidth * 0.6 * ratio
-
-    this.setState({
-      ratio: ratio
-    })
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
@@ -44,7 +37,7 @@ class FakeImageScale extends Component {
     let width = props.fullScreen ? winWidth : winWidth * 0.6
     let boxStyle = {
       width: width,
-      height: states.ratio ? width * states.ratio : defaultHeight,
+      height: 0,
     }
     
     return (
