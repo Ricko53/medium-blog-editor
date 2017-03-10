@@ -6,7 +6,8 @@ import {
   DELETE_SECTION,
   CHANGE_IMAGE_SCALE,
   OPEN_DRAG_DOWN_PAGE,
-  CHANGE_BLOG_SORT
+  CHANGE_BLOG_SORT,
+  SET_IMAGE_RATIO
 } from '../actions';
 
 function addTransaction(state, action) {
@@ -21,6 +22,12 @@ function addTransaction(state, action) {
 function changeImageScale(state, action) {
   let newState = state.slice(0)              //[].concat(state)
   newState[action.id].fullScreen = action.val
+  return newState
+}
+
+function setImageRatio(state, action) {
+  let newState = state.slice(0)
+  newState[action.id].ratio = action.ratio
   return newState
 }
 
@@ -46,8 +53,10 @@ function transactionsBlog(state = defaultBlogData, action) {
       return state;
     case CHANGE_IMAGE_SCALE:
       return changeImageScale(state, action);
+    case SET_IMAGE_RATIO:
+      return setImageRatio(state, action);
     case CHANGE_BLOG_SORT: 
-      return reinsertSort(state, action.sequence)
+      return reinsertSort(state, action.sequence);
     default:
       return state;
   }

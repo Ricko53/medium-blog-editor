@@ -19,20 +19,30 @@ class ImageScale extends Component {
     }
 
     this.scaleImage = this.scaleImage.bind(this)
+    this.getImageRatio = this.getImageRatio.bind(this)
   }
 
   componentDidMount() {
+    let ratio = this.getImageRatio()
+    this.context.actions.setImageRatio(this.props.paragraphName, ratio)
+  }
+
+  shouldComponentUpdate(nextprops, nextstate) {
+    return true
+    // return false
+  }
+
+  componentWillReceiveProps(nextprops, nextContext) {
+  }
+
+  getImageRatio() {
     let imgWidth = parseInt(this.refs.imageDom.width)
     let imgHeight = parseInt(this.refs.imageDom.height)
 
-    // 0.6 按照 content 宽度 60% 计算
-    // scaleVal = 10/6
     let ratio = imgHeight/imgWidth
     defaultHeight = winWidth * 0.6 * ratio
 
-    this.setState({
-      ratio: ratio
-    })
+    return ratio
   }
 
   scaleImage() {
@@ -42,20 +52,19 @@ class ImageScale extends Component {
   render() {
     console.debug('imageScale render')
 
-    let props = this.props;
-    let states = this.state;
-    let width = props.image.fullScreen ? winWidth : winWidth * 0.6
+    const { image } = this.props;
+    let width = image.fullScreen ? winWidth : winWidth * 0.6
     let boxStyle = {
       width: width,
-      height: states.ratio ? width * states.ratio : defaultHeight,
+      height: image.ratio ? width * image.ratio : defaultHeight,
     }
     // let imageStyle = {
-    //   transform: props.image.fullScreen ? `scale(${scaleVal})` : `scale(1, 1)`
+    //   transform: image.fullScreen ? `scale(${scaleVal})` : `scale(1, 1)`
     // }
 
     return (
       <div className="scale-box" style={boxStyle} onClick={this.scaleImage}>
-        <img ref="imageDom" className="sacle-image" src={props.image.url} />
+        <img ref="imageDom" className="sacle-image" src={image.url} />
       </div>
     );
   }
