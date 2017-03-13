@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import { Motion, spring } from 'react-motion';
 
 import './style.scss'
 
 let winWidth = window.innerWidth
-// let scaleVal = 1
 let defaultHeight = 600
+const springConfig = {stiffness: 300, damping: 30};
 
 class ImageScale extends Component {
   static propTypes = {
@@ -36,8 +37,9 @@ class ImageScale extends Component {
   }
 
   getImageRatio() {
-    let imgWidth = parseInt(this.refs.imageDom.width)
-    let imgHeight = parseInt(this.refs.imageDom.height)
+    console.log(this.imageDom)
+    let imgWidth = parseInt(this.imageDom.width)
+    let imgHeight = parseInt(this.imageDom.height)
 
     let ratio = imgHeight/imgWidth
     defaultHeight = winWidth * 0.6 * ratio
@@ -55,17 +57,23 @@ class ImageScale extends Component {
     const { image } = this.props;
     let width = image.fullScreen ? winWidth : winWidth * 0.6
     let boxStyle = {
-      width: width,
-      height: image.ratio ? width * image.ratio : defaultHeight,
+      width: spring(width, springConfig),
+      height: image.ratio ? spring( width * image.ratio, springConfig) : defaultHeight,
     }
-    // let imageStyle = {
-    //   transform: image.fullScreen ? `scale(${scaleVal})` : `scale(1, 1)`
-    // }
 
     return (
-      <div className="scale-box" style={boxStyle} onClick={this.scaleImage}>
-        <img ref="imageDom" className="sacle-image" src={image.url} />
-      </div>
+      <Motion style={boxStyle}>
+      { (pos) => 
+        <div className="scale-box" 
+          style={{
+            width: pos.width,
+            height: pos.height
+          }}
+          onClick={this.scaleImage}>
+          <img ref={(imageDom) => { this.imageDom = imageDom }} className="sacle-image" src={image.url} />
+        </div>
+      }
+      </Motion>
     );
   }
 }

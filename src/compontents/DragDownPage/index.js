@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {Motion, spring} from 'react-motion';
+import { Motion, spring } from 'react-motion';
 
 import FakeMediumText from '../FakeMediumText';
 import FakeImageScale from '../FakeImageScale'

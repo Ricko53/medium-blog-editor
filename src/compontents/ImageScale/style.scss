@@ -4,9 +4,9 @@
   position: relative;
   margin: auto;
   display: flex;
-  transition: height .3s ease, width .3s ease;
+  // transition: height .3s ease, width .3s ease;
   width: $content-width;
-  will-change: height;
+  // will-change: height;
 
   .sacle-image {
     margin: auto;
