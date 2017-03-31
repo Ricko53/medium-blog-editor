@@ -1,0 +1,36 @@
+@import "../../assets/style/variables";
+
+.slide-container{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  .slide-ul {
+    display: flex;
+    transition: transform 0.5s ease;
+
+    .slide-li {
+      // width: 100%;
+      border-radius: 3px; 
+    }
+  }
+
+  .slide-nav {
+    width: 100%;
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    .slide-nav-item {
+      width: 40px;
+      height: 6px;
+      margin: 0 5px;
+      border: 1px solid #ccc;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    .active-nav {
+      background: #333;
+      border: 1px solid #333;
+    }
+  }
+}

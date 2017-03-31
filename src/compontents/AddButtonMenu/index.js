@@ -1,10 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-import { defaultSectionData, defaultImageData } from '../../data/default'
+import { defaultSectionData, defaultImageData, defaultSlideData } from '../../data/default'
 import './style.scss'
-
-let fileSingle
-let fileDouble
 
 class AddButtonMenu extends Component {
   static propTypes = {
@@ -26,8 +23,6 @@ class AddButtonMenu extends Component {
 
   componentDidMount() {
     // fileSingle = document.querySelector("[type=file]");
-    fileSingle = this.refs.single
-    fileDouble = this.refs.double
   }
 
   shouldComponentUpdate(nextprops, nextstate) {
@@ -36,6 +31,8 @@ class AddButtonMenu extends Component {
   }
 
   openNav() {
+    let fileSingle = this.refs.single
+    let fileDouble = this.refs.double
     if( !this.state.stateClass ){
       this.addInputEventList(fileSingle, fileDouble)
     } else {
@@ -72,12 +69,26 @@ class AddButtonMenu extends Component {
 
   updateImageDouble(e) {
     let self = this
-    for (let i = 0, f; i < e.target.files.length; i++) {
+    let newSlideData = defaultSlideData()
+    for (let i = 0; i < e.target.files.length; i++) {
       let f = e.target.files[i]
       if (f.type.indexOf("image") !== 0) continue;
       let reader = new FileReader();
-      reader.onload = (e) => {
-        this.addImage(e.target.result);
+      reader.onload = (ef) => {
+        // this.addImage(e.target.result);
+        let image = new Image()
+        image.src = ef.target.result
+        let ratio = parseInt(image.height) / parseInt(image.width)
+        newSlideData.list.push({
+          url: ef.target.result,
+          name: 'slideImage' + i,
+          ratio: ratio,
+        })
+
+        // onload 最后一张图片后触发 action
+        if(i === 0) {
+          this.props.actions.createTransaction(newSlideData)
+        }
       }
       reader.readAsDataURL(f);
     }

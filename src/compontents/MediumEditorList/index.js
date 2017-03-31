@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 // import Editor from 'react-medium-editor';
 import Editor from '../MediumEditor';
 import ImageScale from '../ImageScale'
+import SlideImages from '../SlideImages'
 
 import './style.css'
 
@@ -84,6 +85,15 @@ class MediumEditorList extends Component {
                     <ImageScale 
                       paragraphName={index}
                       image={item}   
+                    />
+                  </div>
+                );
+              } else if (item.type === 'slide') {
+                return (
+                  <div key={index} data-eleid={item.id} className="slide-content media-with">
+                    <SlideImages
+                      paragraphName={index}
+                      slideData={item}
                     />
                   </div>
                 );

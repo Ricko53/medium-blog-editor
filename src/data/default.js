@@ -22,6 +22,14 @@ export const defaultPosition = {
   update: false,
 }
 
+export const defaultSlideData = function() {
+  return {
+    list: [],
+    type: 'slide',
+    currentInt: 0,
+  }
+}
+
 export const defaultSectionData = function() {
   return {
     text: '',
